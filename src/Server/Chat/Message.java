@@ -1,14 +1,16 @@
-package Server;
+package Server.Chat;
+
+import Server.User;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Message {
     private final String contents;
-    private final Player sender;
+    private final User sender;
     private final String timestamp;
 
-    public Message(String contents, Player sender) {
+    public Message(String contents, User sender) {
         this.contents = contents;
         this.sender = sender;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -19,12 +21,12 @@ public class Message {
         return contents;
     }
 
-    public Player getSender() {
+    public User getSender() {
         return sender;
     }
 
     @Override
     public String toString() {
-        return timestamp + " - " + sender + ": " + contents;
+        return timestamp + " - " + sender.getName() + ": " + contents;
     }
 }
