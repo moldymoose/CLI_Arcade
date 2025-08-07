@@ -52,11 +52,9 @@ public class MainMenu implements Location {
     }
 
     @Override
-    public void drawMenu() {
-        for (ClientHandler client : connectedClients) {
-            client.out.println("Hello " + client.getCurrentUser().getName() + "!");
-            chatLog.displayChat(client);
-        }
+    public void drawMenu(ClientHandler client) {
+        client.out.println("Hello " + client.getCurrentUser().getName() + "!");
+        chatLog.displayChat(client);
     }
 
     @Override

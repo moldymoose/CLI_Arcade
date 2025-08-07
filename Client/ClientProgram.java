@@ -7,6 +7,10 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
+/**
+ * ClientProgram connects to the server via socket connection, sends user input, and displays server output.
+ * It continuously reads output from the server in a separate thread to avoid being blocked by waiting for user input.
+ */
 public class ClientProgram {
     // Client program has a single socket, reader for input, and writer for output
     private static Socket socket;
@@ -26,28 +30,28 @@ public class ClientProgram {
     }
 
     /**
-     * Reads line of input and sends through socket via client's outputwriter
-     * @param input scanner object that gets line of user input
+     * Sends a line of user input read by scanner to the server
+     * @param input Scanner object for reading user input
      */
     public static void sendInput(Scanner input) {
         String send = input.nextLine();
         out.println(send);
     }
 
-    /*
-     * Updates client window with new content from server.
-     * Clears the console of old content and reads new content through socket connection buffered reader
+    /**
+     * Displays user information sent from the server.
+     * Uses ANSI code to clear the screen before printing new info from input stream.
      * @throws IOException
+     */ 
     private static void getFromServer() throws IOException {
         clearConsole();
         while (in.ready()) {
             System.out.println(in.readLine());
         }
     }
-    */
 
     /**
-     * Clears screen of previous text.
+     * Clears user console using ANSI escape codes.
      */
     public static void clearConsole() {
         System.out.print("\033[H\033[2J");
@@ -66,13 +70,10 @@ public class ClientProgram {
         // Separate thread is required to get info from server because scanner.hasNextLine() will halt the program. 
         new Thread(() -> {
             try {
-                // could possibly replace with unused getFromServer() method
                 while (true) {
+                    // If there is new content from the server, read it and display it
                     if (in.ready()) {
-                        clearConsole();
-                        while (in.ready()) {
-                            System.out.println(in.readLine());
-                        }
+                        getFromServer();
                     }
                 }
             } catch (IOException e) {
@@ -80,6 +81,7 @@ public class ClientProgram {
             }
         }).start();
 
+        // Main thread continuously waits for user to provide new input.
         while (true) {
             if (scanner.hasNextLine()) {
                 sendInput(scanner);

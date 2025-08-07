@@ -8,6 +8,12 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+/**
+ * ClientHandler runs as a thread on the server program to manage a client connected via a socket.
+ * Each object has a final socket object created when the ClientHandler is constructed.
+ * The socket input and output stream are handled by final in/out objects
+ * The each ClientHandler also has a User and Location (that may change if a User logs in/out or moves to a different game/menu)
+ */
 public class ClientHandler implements Runnable {
     private final Socket socket;                    // The socket connection between our server and the client
     private User currentUser;                       // The player of the client
@@ -54,7 +60,7 @@ public class ClientHandler implements Runnable {
     public User assignUser() {
         String userPrompt = "Please enter your name: ";
 
-        // Abstract?? input parser that returns a user based on the name they provide
+        // Anonymous input parser that returns a user based on the name they provide
         InputParser<User> inputParser = new InputParser<User>() {
             @Override
             public User parse(String input) throws IllegalArgumentException {
@@ -70,7 +76,7 @@ public class ClientHandler implements Runnable {
             }
         };
 
-        // return calls getinput using Abstract?? input parser and prompt.
+        // return calls getinput using anonymous input parser and prompt.
         return getInput(userPrompt, inputParser);
     }
 
@@ -115,7 +121,7 @@ public class ClientHandler implements Runnable {
         currentLocation = Server.mainMenu;
         Server.mainMenu.addClient(this);
         while (true) {
-            this.currentLocation.drawMenu();
+            this.currentLocation.drawMenu(this);
             this.currentLocation.acceptInput(this);
         }
     }
