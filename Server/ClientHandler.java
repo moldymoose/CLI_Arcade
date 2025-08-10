@@ -66,7 +66,7 @@ public class ClientHandler implements Runnable {
             public User parse(String input) throws IllegalArgumentException {
 
                 // Searches existing users for username.  if it exists returns existing user
-                for (User user : Server.getServerUsers()) {
+                for (User user : ServerProgram.getServerUsers()) {
                     if (user.getName().equals(input.trim())) {
                         return user;
                     }
@@ -118,8 +118,8 @@ public class ClientHandler implements Runnable {
     @Override
     public void run() {
         currentUser = assignUser();
-        currentLocation = Server.mainMenu;
-        Server.mainMenu.addClient(this);
+        currentLocation = ServerProgram.mainMenu;
+        ServerProgram.mainMenu.addClient(this);
         while (true) {
             this.currentLocation.pushDisplayUpdates();
             this.currentLocation.acceptInput(this);
