@@ -121,7 +121,7 @@ public class ClientHandler implements Runnable {
         currentLocation = Server.mainMenu;
         Server.mainMenu.addClient(this);
         while (true) {
-            this.currentLocation.drawMenu(this);
+            this.currentLocation.pushDisplayUpdates();
             this.currentLocation.acceptInput(this);
         }
     }
