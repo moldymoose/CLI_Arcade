@@ -47,8 +47,13 @@ public class ClientProgram {
         clearConsole();
         String line = in.readLine();
         while (!line.equals("%END%")) {
-            System.out.println(line);
-            line = in.readLine();
+            String nextLine = in.readLine();
+            if (!nextLine.equals("%END%")) {
+                System.out.println(line);
+            } else {
+                System.out.print(line);
+            }
+            line = nextLine; 
         }
     }
 
