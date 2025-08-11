@@ -45,8 +45,10 @@ public class ClientProgram {
      */ 
     private static void getFromServer() throws IOException {
         clearConsole();
-        while (in.ready()) {
-            System.out.println(in.readLine());
+        String line = in.readLine();
+        while (!line.equals("%END%")) {
+            System.out.println(line);
+            line = in.readLine();
         }
     }
 

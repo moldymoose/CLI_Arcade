@@ -110,6 +110,10 @@ public class ClientHandler implements Runnable {
     public void setCurrentLocation(Location currentLocation) {
         this.currentLocation = currentLocation;
     }
+    
+    public void endMessage() {
+        out.println("%END%");
+    }
 
     /**
      * Run method for thread.  gets username and assigns it to current user.  Starts user in mainMenu.  Adds this clienthandler to main menu of server.
@@ -120,6 +124,7 @@ public class ClientHandler implements Runnable {
         currentUser = assignUser();
         currentLocation = ServerProgram.mainMenu;
         ServerProgram.mainMenu.addClient(this);
+        endMessage();
         while (true) {
             this.currentLocation.pushDisplayUpdates();
             this.currentLocation.acceptInput(this);

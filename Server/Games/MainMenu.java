@@ -57,6 +57,7 @@ public class MainMenu implements Location {
         for (ClientHandler client : this.connectedClients) {
             client.out.println("Hello " + client.getCurrentUser().getName() + "!");
             chatLog.displayChat(client);
+            client.endMessage();
         }
     }
 
