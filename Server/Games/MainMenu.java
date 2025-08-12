@@ -11,7 +11,6 @@ import java.util.List;
 public class MainMenu implements Location {
     List<ClientHandler> connectedClients;
     ChatLog chatLog;
-    // List<ClientHandler> clientsToUpdate;
 
     public MainMenu() {
         connectedClients = new ArrayList<>();
@@ -56,7 +55,7 @@ public class MainMenu implements Location {
     public void pushDisplayUpdates() {
         for (ClientHandler client : this.connectedClients) {
             client.out.println("Hello " + client.getCurrentUser().getName() + "!");
-            chatLog.displayChat(client);
+            chatLog.displayChat(client, 10);
             client.out.println("Type message: ");
             client.endMessage();
         }
@@ -66,8 +65,6 @@ public class MainMenu implements Location {
     public void acceptInput(ClientHandler client) {
         try {
             chatLog.addMessage(client.in.readLine(), client.getCurrentUser());
-            // clients to update should be set to all if a new line has successfully been read in
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
