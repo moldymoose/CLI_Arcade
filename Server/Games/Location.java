@@ -19,6 +19,7 @@ public interface Location {
     public Boolean hasRoom();
 
     public void pushDisplayUpdates();
+    public void pushDisplayUpdates(ClientHandler client);
 
     public void acceptInput(ClientHandler client);
     public default <T> T processInput(String userPrompt, InputParser<T> inputParser, ClientHandler client) {

@@ -60,11 +60,33 @@ public class MainMenu implements Location {
             client.endMessage();
         }
     }
+    
+    @Override
+    public void pushDisplayUpdates(ClientHandler client) {
+        client.out.println("Hello " + client.getCurrentUser().getName() + "!");
+        chatLog.displayChat(client, 10);
+        client.out.println("Type message: ");
+        client.endMessage();
+    }
 
     @Override
     public void acceptInput(ClientHandler client) {
+
         try {
-            chatLog.addMessage(client.in.readLine(), client.getCurrentUser());
+            String input[] = client.in.readLine().split(" ", 2);
+            String command = input[0];
+            String content = input.length > 1 ? input[1] : "";
+            
+            switch (command) {
+                case "/msg":
+                    chatLog.addMessage(content, client.getCurrentUser());
+                    break;
+            
+                default:
+                    client.out.println("Invalid message");
+                    break;
+            }
+            client.getCurrentLocation().pushDisplayUpdates(client);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
