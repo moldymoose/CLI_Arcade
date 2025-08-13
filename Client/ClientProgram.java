@@ -45,10 +45,16 @@ public class ClientProgram {
      */ 
     private static void getFromServer() throws IOException {
         clearConsole();
+        System.out.println(getTerminalHeight() + " lines in terminal");
         String line = in.readLine();
         while (!line.equals("%END%")) {
-            System.out.println(line);
-            line = in.readLine();
+            String nextLine = in.readLine();
+            if (!nextLine.equals("%END%")) {
+                System.out.println(line);
+            } else {
+                System.out.print(line);
+            }
+            line = nextLine; 
         }
     }
 
@@ -58,6 +64,18 @@ public class ClientProgram {
     public static void clearConsole() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
+    }
+
+    public static int getTerminalHeight() {
+        try {
+            Process process = Runtime.getRuntime().exec("tput lines");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line = reader.readLine();
+            return Integer.parseInt(line);
+        } catch (IOException | NumberFormatException e) {
+            System.err.println("Error getting terminal height: " + e.getMessage());
+            return 24; // Default terminal height
+        }
     }
 
     /**

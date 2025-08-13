@@ -4,10 +4,7 @@ import Server.ClientHandler;
 import Server.InputParser;
 import Server.User;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
 import java.util.List;
 
 public interface Location {
@@ -22,6 +19,7 @@ public interface Location {
     public Boolean hasRoom();
 
     public void pushDisplayUpdates();
+    public void pushDisplayUpdates(ClientHandler client);
 
     public void acceptInput(ClientHandler client);
     public default <T> T processInput(String userPrompt, InputParser<T> inputParser, ClientHandler client) {

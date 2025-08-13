@@ -42,6 +42,7 @@ public class ClientHandler implements Runnable {
     public <T> T getInput(String userPrompt, InputParser<T> inputParser) {
         while (true) {                              // Loop until valid input is received
             out.println(userPrompt);                // Print prompt to user
+            endMessage();
             try {
                 String input = in.readLine();       // Get input from user by reading line from buffered reader
                 return inputParser.parse(input);    // Passes input into parser and returns result
@@ -124,9 +125,8 @@ public class ClientHandler implements Runnable {
         currentUser = assignUser();
         currentLocation = ServerProgram.mainMenu;
         ServerProgram.mainMenu.addClient(this);
-        endMessage();
+        this.currentLocation.pushDisplayUpdates();
         while (true) {
-            this.currentLocation.pushDisplayUpdates();
             this.currentLocation.acceptInput(this);
         }
     }
