@@ -1,8 +1,10 @@
-package Server.Games;
+package Server.Locations.MainMenu;
 
 import Server.Chat.ChatLog;
 import Server.ClientHandler;
 import Server.User;
+import Server.LocationResources.Display;
+import Server.LocationResources.Location;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,10 +13,15 @@ import java.util.List;
 public class MainMenu implements Location {
     List<ClientHandler> connectedClients;
     ChatLog chatLog;
+    Display display;
 
     public MainMenu() {
         connectedClients = new ArrayList<>();
         chatLog = new ChatLog();
+        display = new Display(73, 20);
+        
+        display.addPanel(chatLog);
+        display.addPanel(chatLog);
     }
 
     @Override
@@ -53,20 +60,14 @@ public class MainMenu implements Location {
 
     @Override
     public void pushDisplayUpdates() {
-        for (ClientHandler client : this.connectedClients) {
-            client.out.println("Hello " + client.getCurrentUser().getName() + "!");
-            chatLog.displayChat(client, 10);
-            client.out.println("Type message: ");
-            client.endMessage();
+        for (ClientHandler client : connectedClients) {
+            pushDisplayUpdates(client);
         }
     }
     
     @Override
     public void pushDisplayUpdates(ClientHandler client) {
-        client.out.println("Hello " + client.getCurrentUser().getName() + "!");
-        chatLog.displayChat(client, 10);
-        client.out.println("Type message: ");
-        client.endMessage();
+        client.out.println(display);
     }
 
     @Override
@@ -86,7 +87,7 @@ public class MainMenu implements Location {
                     client.out.println("Invalid message");
                     break;
             }
-            client.getCurrentLocation().pushDisplayUpdates(client);
+            pushDisplayUpdates();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

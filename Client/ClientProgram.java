@@ -45,7 +45,6 @@ public class ClientProgram {
      */ 
     private static void getFromServer() throws IOException {
         clearConsole();
-        System.out.println(getTerminalHeight() + " lines in terminal");
         String line = in.readLine();
         while (!line.equals("%END%")) {
             String nextLine = in.readLine();

@@ -1,4 +1,4 @@
-package Server.Games;
+package Server.LocationResources;
 
 import Server.ClientHandler;
 import Server.InputParser;
@@ -17,7 +17,7 @@ public interface Location {
     public void removeClient(ClientHandler client);
 
     public Boolean hasRoom();
-
+    
     public void pushDisplayUpdates();
     public void pushDisplayUpdates(ClientHandler client);
 

@@ -1,12 +1,12 @@
 package Server;
 
-import Server.Games.Location;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+
+import Server.LocationResources.Location;
 
 /**
  * ClientHandler runs as a thread on the server program to manage a client connected via a socket.

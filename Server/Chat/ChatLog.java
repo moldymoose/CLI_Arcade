@@ -1,13 +1,14 @@
 package Server.Chat;
 
-import Server.ClientHandler;
 import Server.User;
+import Server.LocationResources.Panel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatLog {
-    List<Message> chatLog;
+public class ChatLog implements Panel {
+    private List<Message> chatLog;
+    private String contents;
 
     public ChatLog() {
         chatLog = new ArrayList<>();
@@ -17,28 +18,29 @@ public class ChatLog {
         chatLog.add(new Message(msg, sender));
     }
 
-    //For printing entire chat
-    public void displayChat(ClientHandler client) {
-        client.out.println("=== Chat Log ===");
-        for (Message msg : chatLog) client.out.println(msg);
-        client.out.println("================");
-    }
-
-    //For printing specific number of most recent messages
-    public void displayChat(ClientHandler client, int count) {
-        client.out.println("=== Chat Log ===");
-        int start = Math.max(0, chatLog.size() - count);
-        int actualMessages = chatLog.size() - start;
-
-        // Print blank lines first if not enough messages
-        for (int i = 0; i < count - actualMessages; i++) {
-            client.out.println();
-        }
+    /**
+     * Returns the most recent messages
+     * @param n number of messages to be returned
+     * @return
+     */
+    public String getMessages(int n) {
+        StringBuilder chat = new StringBuilder();
 
         // Print the most recent messages
-        for (int i = start; i < chatLog.size(); i++) {
-            client.out.println(chatLog.get(i));
+        for (int i = Math.max(0, chatLog.size() - n); i < chatLog.size(); i++) {
+            chat.append(chatLog.get(i)).append(System.lineSeparator());
         }
-        client.out.println("================");
+        return chat.toString();
+    }
+    
+    @Override
+    public void updateContents() {
+        contents = getMessages(chatLog.size());
+    }
+
+    @Override
+    public String toString() {
+        updateContents();
+        return contents;
     }
 }

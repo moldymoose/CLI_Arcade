@@ -2,13 +2,13 @@ package Server;
 
 
 
-import Server.Games.MainMenu;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+
+import Server.Locations.MainMenu.MainMenu;
 
 public class ServerProgram {
     // Server will only ever opperate on one port, have one list of users, and have one main menu
