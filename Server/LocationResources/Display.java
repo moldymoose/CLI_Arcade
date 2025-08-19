@@ -3,6 +3,8 @@ package Server.LocationResources;
 import java.util.ArrayList;
 import java.util.List;
 
+import Server.ClientHandler;
+
 public class Display {
     private List<Panel> panels;
     private int width;
@@ -24,18 +26,17 @@ public class Display {
         panels.add(newPanel);
     }
     
-    @Override
-    public String toString() {
+    public String displayString(ClientHandler client) {
         StringBuilder display = new StringBuilder();
         List<String[]> panelList = new ArrayList<>();
 
         int numPanels = panels.size();
-        int borderSpace = (numPanels + 1) * sideBorder.length() + numPanels; 
+        int borderSpace = (numPanels + 1) * sideBorder.length() + numPanels *2; 
         int contentWidth = (width - borderSpace) / numPanels;
 
         // Prepare panel contents split into lines
         for (Panel panel : panels) {
-            panelList.add(panel.toString().split("\\R"));
+            panelList.add(panel.getContents(client).split("\\R"));
         }
 
         for (int i = 0; i < height; i++) {

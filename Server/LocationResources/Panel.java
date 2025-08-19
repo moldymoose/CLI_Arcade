@@ -1,5 +1,7 @@
 package Server.LocationResources;
 
+import Server.ClientHandler;
+
 public interface Panel {
-    public void updateContents();
+    public String getContents(ClientHandler client);
 }

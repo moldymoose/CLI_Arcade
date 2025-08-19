@@ -13,7 +13,7 @@ public class Message {
     public Message(String contents, User sender) {
         this.contents = contents;
         this.sender = sender;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         this.timestamp = LocalDateTime.now().format(formatter);
     }
 

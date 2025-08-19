@@ -13,14 +13,16 @@ import java.util.List;
 public class MainMenu implements Location {
     List<ClientHandler> connectedClients;
     ChatLog chatLog;
+    MainMenuPanel mainMenuPanel;
     Display display;
 
     public MainMenu() {
         connectedClients = new ArrayList<>();
         chatLog = new ChatLog();
-        display = new Display(73, 20);
+        mainMenuPanel = new MainMenuPanel();
+        display = new Display(70, 20);
         
-        display.addPanel(chatLog);
+        display.addPanel(mainMenuPanel);
         display.addPanel(chatLog);
     }
 
@@ -67,7 +69,7 @@ public class MainMenu implements Location {
     
     @Override
     public void pushDisplayUpdates(ClientHandler client) {
-        client.out.println(display);
+       client.out.println(display.displayString(client));
     }
 
     @Override

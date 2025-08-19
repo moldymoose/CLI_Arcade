@@ -1,5 +1,6 @@
 package Server.Chat;
 
+import Server.ClientHandler;
 import Server.User;
 import Server.LocationResources.Panel;
 
@@ -8,7 +9,6 @@ import java.util.List;
 
 public class ChatLog implements Panel {
     private List<Message> chatLog;
-    private String contents;
 
     public ChatLog() {
         chatLog = new ArrayList<>();
@@ -32,15 +32,8 @@ public class ChatLog implements Panel {
         }
         return chat.toString();
     }
-    
-    @Override
-    public void updateContents() {
-        contents = getMessages(chatLog.size());
-    }
 
-    @Override
-    public String toString() {
-        updateContents();
-        return contents;
+    public String getContents(ClientHandler client) {
+        return getMessages(chatLog.size());
     }
 }
